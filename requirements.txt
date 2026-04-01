@@ -20,7 +20,8 @@ click==8.1.7
 colorama==0.4.6
 constantly==23.10.4
 #cryptography==39.0.0
-cryptography
+#cryptography
+cryptography>=42.0.1
 cssselect2==0.7.0
 daphne==4.1.2
 defusedxml==0.7.1
@@ -72,7 +73,8 @@ pyfcm==2.0.6
 pyHanko==0.25.1
 pyhanko-certvalidator==0.26.3
 PyJWT==2.9.0
-pyOpenSSL==23.0.0
+#pyOpenSSL==23.0.0
+pyOpenSSL>=24.0.0
 pyparsing==3.1.2
 pypdf==4.3.1
 pypng==0.20220715.0
