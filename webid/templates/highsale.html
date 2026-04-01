@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid py-3">
+	<div class="container">
+	
+
+	
+		<div class="row">
+		<div class ="card-header shadow">
+			
+			<h2 class="mb-0">Sales</h2>
+		</div>
+	
+		<!--{% csrf_token %}
+
+			{% regroup sales by product as category_list %}
+
+			<ul>
+			{% for product in category_list %}
+    			<li>{{ product.grouper }}
+    			<li>{{ product.fish_name.grouper }}
+    			<ul>
+        			{% for book in category.list %}
+          				<li>{{ book.product_id }}</li>
+          				<li>{{ book.product.fish_name }}</li>
+        			{% endfor %}
+    			</ul>
+    			</li>
+			{% endfor %}
+			</ul>-->
+
+			<div class="col-md-12 shadow checkoutform">
+
+				<div class="card-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Fish Name</th>
+								<th>Fish Type</th>
+								<th>Price</th>
+								<th>No. of Sales</th>
+								<th>Sales Amount</th>
+								
+								
+							</tr>
+						</thead>
+						<tbody>
+							
+							
+								
+						{% for item in result %}
+
+						
+							
+								
+								
+								
+									
+							
+								
+
+								<tr>
+									
+											<td>{{item.product__fish_name}}</td>
+											<td>{{item.product__fish_type}}</td>
+											<td>{{item.product__fish_price}}</td>
+											<td>{{item.quantity__sum}}</td>
+											<td>{{item.sale_amount}}</td>
+											
+											
+
+								</tr>
+									
+								
+						{% endfor %}
+
+								
+							
+								
+							
+								
+						</tbody>
+					</table>
+					
+					<h6 class="fw-bold">Grand Total
+								<span class="float-end">Php {{total.sale_amount__sum | stringformat:'d'}}</span>
+					</h6>
+					<br>
+				
+				<a href= "{% url 'export_pdf1' %}" class="btn btn-outline-primary">Export To PDF</a>
+
+				
+				</div>
+			</div>
+
+		
+
+		</div>
+
+	</div>
+
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}

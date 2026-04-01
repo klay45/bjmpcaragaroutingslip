@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if form.errors %}
+
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Opps!</strong>There was an error with your form...
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+
+    </div>
+<script>
+    $(document).ready(function()
+    {
+        $('.chkbox').click(function()
+        {
+            var text="";
+            $('.chkbox:checked').each(function()
+            {
+                text+=$(this).val()+',';
+            });
+            text=text.substring(0,text.lenght-1);
+            $('#chktext').val(text);
+        });
+         $('#but1').click(function()
+         {
+            alert("Record save");
+
+         });
+    });
+</script>
+{% endif %}
+<!--asgi appl-->
+    
+<div class="container-fluid py-3">
+    <div class="container">
+
+
+	<form action="{% url 'addletter' %}" method=POST enctype="multipart/form-data">
+	<div class ="shadow p-4 mb-5 bg-body rounded">
+	<h1>BJMP ROUTING SLIP</h1>
+		{% csrf_token %}
+		{{form.as_p}}
+
+
+
+        <div class="col-md-12 shadow checkoutform">
+
+<script>
+    $(document).ready(function()
+    {
+       /* $('.chkbox').click(function()
+        {
+            var text="";
+            $('.chkbox:checked').each(function()
+            {
+                text+=$(this).val()+',';
+            });
+            text=text.substring(0,text.length-1);
+            $('#chktext').val(text);
+        });*/
+         $('#but1').click(function()
+         {
+            alert("Record save");
+
+         });
+    });
+</script>
+
+                <div class="card-body">
+                <div class ="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <h5>Action Request:</h5>
+        <input type="checkbox" class="chkbox" id="chkbox" value="Approval/Signature">Approval/Signature<br>
+        <input type="checkbox" class="chkbox" id="chkbox" value="Appropriate Action">Appropriate Action<br>
+        <input type="checkbox" class="chkbox" value="Comment/Recommendation">Comment/Recommendation<br>
+        <input type="checkbox" class="chkbox" value="Study/Investigation">Study/Investigation<br>
+        <input type="checkbox" class="chkbox" value="Rewrite/Redraft">Rewrite/Redraft<br>
+        <input type="hidden" id="chktext" name="actionrequest"/>
+        <input  id="but1" type="hidden" value="Insert"/>
+        </th>
+                                <th>
+        <input type="checkbox" class="chkbox" value="Reply Direct to Writer">Reply Direct to Writer<br>
+        <input type="checkbox" class="chkbox" value="Information">Information<br>
+        <input type="checkbox" class="chkbox" value="Dispatch">Dispatch<br>
+        <input type="checkbox" class="chkbox" value="File/Reference">File/Reference<br>
+        <input type="checkbox" class="chkbox" value="See Remarks">Prepare Speech/Message<br>
+        <input type="checkbox" class="chkbox" value="See me/ Call me">See me/ Call me<br>
+    </th>
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                           
+                        
+                            
+                            
+
+                            <tr>
+
+                            </tr>
+ 
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+                </div>
+            </div> 
+        
+        
+       
+	<br/><br/>
+   
+	<input type="submit" value="Submit" class="btn btn-primary" >
+	</div>
+	</form>
+    </div>
+</div>
+
+{% endblock %}

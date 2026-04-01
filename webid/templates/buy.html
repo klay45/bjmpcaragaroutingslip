@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="topnav">
+
+  <div class="search-container">
+    
+    <form action="{% url 'searchbarfish' %}" method=POST>
+      {% csrf_token %}
+      
+      <input type="text" placeholder="Search fish type" name="searched">
+      <button type="submit">Submit</button>
+     
+    </form>
+  </div>
+</div>
+<table id="customers">
+<tr>
+    <th>Fish Type</th>
+    <th>Fish Name</th>
+    <th>Max Size</th>
+    <th>Availabe Size</th>
+    <th>Availabe Quantity</th>
+    <th>Transaction</th>
+</tr>
+ {% for x in fish %}
+
+<tr>
+<td>{{x.fish_type}}</td>
+<td>{{ x.fish_name }}</td>
+<td>{{ x.fish_size }}</td>
+<td>{{ x.available_size }}</td>
+<td>{{ x.available_qty }}</td>
+<td><a href="addfish2/">Add</a><h7>/</h7><a href="deletefish/{{x.id}}">Delete</a><h7>/</h7><a href=fishupdateform/{{x.id}}>Update</a></td>    
+</tr>
+{% endfor %}
+</table>
+
+
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid py-3">
+	<!--<div class="container">-->
+	<div class="mydiv">
+
+	
+		<div class="row">
+			<div class ="card-header">
+				<h3 class="mb-0">Order View
+					<a href="{% url 'myorder'%}" class="btn btn-warning float-end text-white"><i class="fa fa-reply"></i>Back</a>
+				</h3>
+			</div>
+	
+			{% csrf_token %}
+			<div class="col-md-12 shadow">
+
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+							<h4> Shipping Details</h4>
+							<hr>
+							<label class="mt-2">First Name</label>
+							<div class="border p-1">{{order.fname}}</div>
+							<label class="mt-2">Last Name</label>
+							<div class="border p-1">{{order.lname}}</div>
+							<label class="mt-2">Email</label>
+							<div class="border p-1">{{order.email}}</div>
+							<label class="mt-2">Contact No</label>
+							<div class="border p-1">{{order.phone}}</div>
+							<label class="mt-2">Address</label>
+							<div class="border p-1">
+								{{order.address}}
+								{{order.city}}
+								{{order.state}}
+								{{order.country}}
+							</div>
+							<label class="mt-2">Zip Code</label>
+							<div class="border p-1">{{order.zipcode}}</div>
+						</div>
+
+						<div class="col-md-6">
+							<h4> Order Details</h4>
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+								    	<th>Name</th>
+										<th>Quantity</th>
+										<th>Price</th>
+										<th>Image</th>
+									
+									</tr>
+								</thead>
+								<tbody>
+								{% for item in orderitems %}
+								
+
+									<tr>
+										<td>{{item.product.fish_name}}</td>
+										<td>{{item.quantity}}</td>
+										<td>{{item.price}}</td>
+										<td>
+											<img src="{{item.product.fish_img.url}}" height="50px" width="50px" alt="Product image">
+										</td>
+										
+								
+									</tr>
+										{% endfor %}
+								</tbody>
+							</table>
+							<h4>Grand Total :<span class="float-end"> {{order.total_price}}</span></h4>
+							<h6 class="border p-2">Payment Mode : {{order.payment_mode}}</h6>
+							<h6 class="border p-2">Order Status : {{order.status}}</h6>
+							<h6 class="border p-2">Tracking No. : {{order.tracking_no}}</h6>
+						</div>
+
+					</div>
+					
+					
+				</div>
+
+			</div>
+
+
+
+
+
+		</div>
+
+	</div>
+</div>
+
+
+{% endblock %}

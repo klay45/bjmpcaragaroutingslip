@@ -1,0 +1,62 @@
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Klay45.com</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'website/img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'website/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'website/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'website/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'website/lib/twentytwenty/twentytwenty.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'website/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'website/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'website/css/style2.css' %}" rel="stylesheet">
+
+    
+</head>
+<body>
+<h1>Add member</h1>
+<div class="topnav">
+  <a class="active" href="home/">Home</a>
+  <a href="home/">About</a>
+  <a href="#contact">Contact</a>
+  <div class="search-container">
+    {% for x in mymembers %}
+    {% endfor %}
+    <form action="delete/id">
+      
+      <input type="text" placeholder="Search..." name="search" id={{x.id}}>
+      <button type="submit">Submit</button>
+     
+    </form>
+  </div>
+</div>
+<form action="addrecord/" method="post">
+{% csrf_token %}
+First Name:<br>
+<input name="first">
+<br><br>
+Last Name:<br>
+<input name="last">
+<br><br>
+<input type="submit" value="Submit">
+</form>

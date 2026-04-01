@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script>
+  $(document).on("click", ".open-preview_modal", function (e) {
+    e.preventDefault();
+    var $preview_modal = $("#preview_modal");
+    var popup_url = $(this).data("popup-url");
+
+    $(".modal-body", $preview_modal).load(popup_url, function () {
+      $preview_modal.modal("show");
+      
+      /*$(".modal-backdrop").remove();-->*/
+    $("#btnClosePopup").click(function () {
+            $("#preview_modal").modal("hide");
+        });
+    });
+  });
+
+
+    
+
+</script>
+
+<div id="preview_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button id ="btnClosePopup" type="button" class="btn btn-primary close" data-dismiss="modal" target="_blank" aria-label="Close">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="preview_modal" tabindex="-1" aria-labelledby="exampleModalLabel" presentationStyle="fullScreen"aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" id ="btnClosePopup"class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+      <div>
+    
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="container-fluid py-3">
+
+
+
+    <div class="container">
+
+    
+
+    
+        <div class="row">
+
+            
+
+        <div class ="card-header">
+        
+            <h2 class="mb-0 d-flex justify-content-left">Letters</h2>
+            <form  action="{% url 'searchletter' %}" method=POST>
+                {% csrf_token %}
+            <div class="input-group d-flex justify-content-end">
+            
+                <div class="form-outline">
+                    <input type="text"  name="searched" class="form-control" />
+                     
+                
+                </div>
+                <button id="search-button" type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+                </button>
+            
+            </div>
+            </form>
+        </div>
+    
+        {% csrf_token %}
+            <div class="col-md-12 shadow checkoutform">
+
+                <div class="card-body">
+                <div class ="table-responsive">
+                    <table id="sales-info" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Letter Description</th>
+                                <th>Letter Sender</th>
+                                <th>Date Send</th>
+                               
+                                <th>Signaturee | Status</th>
+                                <th>Signaturee | Status</th>
+                                <th>Signaturee | Status</th>
+                                <th>Signaturee | Status</th>
+                                <th>Dispatch| Status</th>
+                                <th>File</th>
+                                <th>Remarks</th>
+                                <th>Trasaction No.</th>
+                                <th>Update</th>
+                                
+                            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for item in orders %}
+                            
+                            <tr>
+                                <td>{{item.letter_desc}}</td>
+                                <td>{{item.sender}}</td>
+                                <td>{{item.date_send}}</td>
+                                
+                                <td>{{item.aprover_1}}<br>{{item.stat_1}}</td>
+                                <td>{{item.aprover_4}}<br>{{item.stat_4}}</td>
+                                <td>{{item.aprover_2}}<br>{{item.stat_2}}</td>
+                                <td>{{item.aprover_3}}<br>{{item.stat_3}}</td>
+                                <td>{{item.dispatch}}</td>
+                               
+                                <td><a href="displaypdf/{{item.id}}"target="_new"><i class="fa fa-file-pdf-o" style="font-size:36px;color:red"></i></a></td>
+                                <!--
+                                <td>{% if item.comment_rcds%}<a class="open-preview_modal" data-toggle ="modal" data-target="#preview_modal" href="{% url 'modal_view' id=item.id %}"data-popup-url="{% url 'modal_view' id=item.id %}"
+   class="btn-light float-end">RCDS <i class="fa fa-eye"></i></a>{%else%}{%endif%}<br>{% if item.comment_ardo%}<a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_ardo' id=item.id %}"data-popup-url="{% url 'modal_view_ardo' id=item.id %}">ARDO <i class="fa fa-eye"></i></a></h7>{%else%}{%endif%}<br>{% if item.comment_arda%}<a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_arda' id=item.id %}"data-popup-url="{% url 'modal_view_arda' id=item.id %}"class="btn btn-outline-primary float-end">ARDA <i class="fa fa-eye"></i></a>{%else%}{%endif%}<br>{% if item.comment_rd%}<a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_rd' id=item.id %}"data-popup-url="{% url 'modal_view_rd' id=item.id %}">RD View</a></h7>{%else%}{%endif%}<br></td>-->
+   <td>
+    {% if item.comment_rcds and item.stat_1 == "Pending" %}
+        <a class="open-preview_modal" data-toggle ="modal" data-target="#preview_modal" href="{% url 'modal_view' id=item.id %}"data-popup-url="{% url 'modal_view' id=item.id %}"
+   class="btn-light float-end">
+           RCDS <i class="fa fa-eye"></i>
+        </a><br>
+    {% endif %}
+
+    {% if item.comment_ardo and item.stat_4 == "Pending" %}
+        <a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_ardo' id=item.id %}"data-popup-url="{% url 'modal_view_ardo' id=item.id %}">
+
+
+           ARDO <i class="fa fa-eye"></i>
+        </a><br>
+    {% endif %}
+
+    {% if item.comment_arda and item.stat_2 == "Pending" %}
+        <a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_arda' id=item.id %}"data-popup-url="{% url 'modal_view_arda' id=item.id %}"class="btn btn-outline-primary float-end">
+           ARDA <i class="fa fa-eye"></i>
+        </a><br>
+    {% endif %}
+
+    {% if item.comment_rd and item.stat_3 == "Pending" %}
+        <a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_rd' id=item.id %}"data-popup-url="{% url 'modal_view_rd' id=item.id %}">
+           RD <i class="fa fa-eye"></i>
+        </a>
+    {% endif %}
+</td>
+
+
+                                <td>{{item.bjmptrans_no}}</td>
+                                <td>
+                                     
+                                     <!--<a href="#}"class="btn btn-primary"> View</a>-->
+                                     <a href="updateletter/{{item.id}}"><i class='fas fa-edit' style='font-size:36px'></i></a><br><br><br>
+                                     <a href="{% url 'routingslip_pdf' item.pk %}"> <i class='fas fa-print' style='font-size:36px'></i></a>
+                                     
+                                </td>
+                                
+
+                                 
+                            
+                              
+                            </tr>
+
+                                {% endfor %}
+                                
+                              
+                              
+
+
+                        </tbody>
+                    </table>
+
+
+
+
+    <script>
+        var t = document.getElementById('sales-info');
+        if(t) {
+            Array.from(t.rows).forEach((td, rowIdx) => {
+                Array.from(td.cells).forEach((cell, cellIdx) => {
+                    if (cell.innerText == 'sdf') {
+                        cell.style.backgroundColor = 'RGBA(95,160,97,0.6)';
+                    }else if (cell.textContent == "ARDOPending") {
+                        cell.style.backgroundColor = 'RGBA(249,38,19,1)';
+                    }else if (cell.textContent == 'ARDOApproved') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'ARDOOn Leave') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'ARDOOfficial Business') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == "RCDSPending") {
+                        cell.style.backgroundColor = 'RGBA(249,38,19,1)';
+                    }else if (cell.textContent == 'RCDSApproved') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'RCDSOn Leave') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'RCDSOfficial Business') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == "ARDAPending") {
+                        cell.style.backgroundColor = 'RGBA(249,38,19,1)';
+                    }else if (cell.textContent == 'ARDAApproved') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'ARDAOn Leave') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'ARDAOfficial Business') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == "RDPending") {
+                        cell.style.backgroundColor = 'RGBA(249,38,19,1)';
+                    }else if (cell.textContent == 'RDApproved') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'RDOn Leave') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }else if (cell.textContent == 'RDOfficial Business') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }
+
+
+                });
+            });
+        }
+        
+    </script>
+                </div>
+                
+                
+                </div>
+                
+                 <!--<a href="{% url 'displaylettermore' %}"><h7 class="mb-0 text-end">See More</h7></a>-->
+                 <a href="{% url 'displaylettermore' %}" class="d-block text-end">
+                 <h7 class="mb-0">See More</h7>
+                 </a>
+            </div> 
+
+        
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+{% endblock %}
+
+
+    

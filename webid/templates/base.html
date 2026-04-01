@@ -1,0 +1,590 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>bjmpcaraga.com</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <meta http-equiv="refresh" content="600">
+
+
+
+
+
+    <!-- Favicon -->
+    <link href="{% static 'website/img/favv.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'website/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'website/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'website/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'website/lib/twentytwenty/twentytwenty.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'website/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'website/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'website/css/style2.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Dynamic search-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script><!--Added new Scrip BJMP-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
+
+    <!--asgi appl-->
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
+
+    <!--firebase-->
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-messaging.js"></script>
+
+
+
+
+    <!--alertfity start-->
+
+        <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+    <!-- 
+        RTL version
+    -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+
+
+
+    <!--fish icon-->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+
+
+
+<!--SCRIPT FOR PUSHNOTIFICATION-->
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body hx-ext="ws" ws-connect="/ws/notifications/">
+      
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light ps-5 pe-0 d-none d-lg-block">
+        <div class="row gx-0">
+            <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <small class="py-2"><i class="far fa-clock text-primary me-2"></i>Opening Hours: Mon - Saturday : 8.00 am - 6.00 pm, Sunday Closed</small>
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-lg-end">
+                <div class="position-relative d-inline-flex align-items-center bg-primary text-white top-shape px-5">
+                    <div class="me-3 pe-3 border-end py-2">
+                        <p class="m-0"><i class="fa fa-envelope-open me-2"></i>bjmpcaraga.com.ph</p>
+                    </div>
+                    <div class="py-2">
+                        <p class="m-0"><i class="fa fa-phone-alt me-2"></i>+085 143 14344</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
+        <a href="#" class="navbar-brand p-0">
+            <h2 class="m-0 text-primary">BJMP CARAGA REGION</h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+            
+                <a href="{% url 'index' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif%}">Home</a>
+
+                
+                <div class="nav-item nav-link">
+
+
+                <!-- Right elements -->
+ 
+  <div class="flex items-center relative">
+
+  <div class="dropdown relative">
+    <a class="
+          text-gray-500
+          hover:text-gray-700
+          focus:text-gray-700
+          mr-8
+          dropdown-toggle
+          hidden-arrow
+          flex items-center
+        " href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell"
+        class="w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path fill="currentColor"
+          d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z">
+        </path>
+      </svg>
+      <!-- Number of Notifications box -->
+      <span id="notification-number" class="badge"></span>
+      
+    </a>
+    <ul class="
+      dropdown-menu
+      min-w-max
+      absolute
+      hidden
+      bg-white
+      text-base
+      z-50
+      float-left
+      py-2
+      list-none
+      text-left
+      rounded-lg
+      shadow-lg
+      mt-1
+      hidden
+      m-0
+      bg-clip-padding
+      border-none
+      left-auto
+      right-0
+    " aria-labelledby="dropdownMenuButton1"
+      id="notification-dropdown">
+      
+        <!-- Notifications go here -->
+
+        <hr class="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+        <li>
+            <a href="#" id="clear-btn" class="
+            dropdown-item
+            text-sm
+            py-2
+            px-4
+            font-normal
+            block
+            w-full
+            whitespace-nowrap
+            bg-transparent
+            text-gray-700
+            hover:bg-gray-100">Clear All</a>
+    </ul>
+  </div>
+  
+  <!-- Right elements -->
+
+
+
+  </div>
+
+
+
+        </div>
+
+
+            <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Transaction</a>
+                    <div class="dropdown-menu m-0">
+                    {% if user.is_authenticated and user.is_superuser %}
+                        <!--<a href="{% url 'notifications' %}" class="dropdown-item">Notification</a>-->
+                        <a href="{% url 'addletter' %}" class="dropdown-item">Add Letter</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'adddivision1' %}" class="dropdown-item">Add Division</a>
+                        <a href="{% url 'profile' %}" class="dropdown-item">Apply for ID</a>
+                        <a href="{% url 'status' %}" class="dropdown-item">Application Status</a>
+                        <!--<a href="{% url 'downloadidapp' %}" class="dropdown-item">Download ID Application</a>-->
+                        <a href="{% url 'importidforclaim' %}" class="dropdown-item">Import ID For Claim</a>
+                        <a href="{% url 'importdeptanddesignation' %}" class="dropdown-item">Import Department and Designation</a>
+                        <a href="{% url 'displayid' %}" class="dropdown-item">View ID Application</a>
+                        <a href="{% url 'activeapplication' %}" class="dropdown-item">View Active ID Application</a>
+                        <a href="{% url 'addid' %}" class="dropdown-item">Encode ID</a>
+                        <a href="{% url 'downloadidadmin' %}" class="dropdown-item">Download ID Application</a>
+                        <a href="{% url 'importidforclaimadmin' %}" class="dropdown-item">Import ID For Claim Admin</a>
+                        <a href="{% url 'displayidadmin' %}" class="dropdown-item">View ID Application Admin</a>
+                    {% elif user.is_staff %}
+                        <!--<a href="{% url 'addid' %}" class="dropdown-item">Encode ID</a>
+                        <a href="{% url 'displayidadmin' %}" class="dropdown-item">View ID Application Admin</a>-->
+                        <!--<a href="{% url 'notifications' %}" class="dropdown-item">Notification</a>-->
+                        <a href="{% url 'addletter' %}" class="dropdown-item">Add Letter</a>
+                        <a href="{% url 'adddivision1' %}" class="dropdown-item">Add Division</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'displayletterRCDS' %}" class="dropdown-item">Approve Letter</a>
+                        <a href="{% url 'displaymsgcenter' %}" class="dropdown-item">Message Center</a>
+                    {% else %}
+                        <!--<a href="{% url 'profile' %}" class="dropdown-item">Apply for ID</a>
+                        <a href="{% url 'status' %}" class="dropdown-item">Application Status</a>-->
+                        <!--<a href="{% url 'notifications' %}" class="dropdown-item">Notification</a>-->
+                        <a href="{% url 'addletter' %}" class="dropdown-item">Add Letter</a>
+                        <a href="{% url 'adddivision1' %}" class="dropdown-item">Add Division</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'displayletterRCDS' %}" class="dropdown-item">Approve Letter</a>
+                        <a href="{% url 'displaymsgcenter' %}" class="dropdown-item">Message Center</a>
+
+                    {% endif %}
+                    </div>
+            </div>
+
+            {% if user.is_authenticated %}
+              
+                <a href="{% url 'logoutuser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'logoutuser' %}active{% endif%}">Log-out</a>
+
+<!--ADDED BELL FOR TESTING START
+                <div id="notification-bell">
+        <i class="fas fa-bell"></i>
+        <span id="notification-counter"></span>
+        <div id="notification-message"></div>
+        <button id="clear-notifications">Clear</button>
+    </div>
+    ADDED BELL FOR TESTING END
+    <a href="{% url 'notification_count_api' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'logoutuser' %}active{% endif%}">test</a>-->
+            {% else %}
+                <a href="{% url 'registeruser'  %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'registeruser' %}active{% endif%}">Sign-up</a>
+                <a href="{% url 'loginuser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'loginuser' %}active{% endif%}">Log-in</a>
+                <a href="{% url 'aboutus' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif%}">About Us</a>
+                                
+            {% endif %}
+
+            </div>
+
+            <div class="nav-item nav-link">
+            {% if user.is_authenticated and user.employee.id_pic.url %}
+                <a href="{% url 'addprofileimage' %}" >
+                    <img class="rounded-circle" src="{{user.employee.id_pic.url}}" height="80px" width="80px">
+                </a>
+            {% elif user.is_authenticated %}
+                <a href="{% url 'addprofileimage' %}">
+                    <i class="fa fa-user fa-4x" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+            </div>
+    </nav>
+    <!-- Navbar End -->
+
+ <!-- Full Screen Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="input-group" style="max-width: 600px;">
+                        <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
+                        <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Full Screen Search End -->
+
+
+
+
+
+
+{% block content %}
+
+{% endblock %}
+
+
+
+
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light py-5 wow fadeInUp" data-wow-delay="0.3s" style="margin-top: 10px;">
+        <div class="container pt-5">
+            <div class="row g-5 pt-4">
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Quick Links</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                        <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Popular Links</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                        <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Get In Touch</h3>
+                    <p class="mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="bi bi-envelope-open text-primary me-2"></i>klay45@gmail.com</p>
+                    <p class="mb-0"><i class="bi bi-telephone text-primary me-2"></i>+012 345 67890</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Follow Us</h3>
+                    <div class="d-flex">
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-light py-4" style="background: #051225;">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">klay45.com</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'website/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'website/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'website/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'website/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'website/lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'website/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'website/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src="{% static 'website/lib/twentytwenty/jquery.event.move.js' %}"></script>
+    <script src="{% static 'website/lib/twentytwenty/jquery.twentytwenty.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'website/js/main.js' %}"></script>
+    <script src="{% static 'website/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'website/js/custom.js' %}"></script>
+
+
+    <!--checkout razor pay -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--{% block scripts %}
+    {% endblock scripts %}-->
+
+    <!--Paypal payment -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AQA4LlilkG_cBPdIkcZr0YCzY4E_qZdnDHha4L1_5pLVu7vMnInNYaiUmufu-vyhjRaJNn4iHrc-Z0zS&currency=USD"></script>
+
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+
+
+     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+    <!--<script>
+        let numberSpan = document.getElementById('notification-number');
+
+        document.body.addEventListener('htmx:wsAfterMessage', (e) => {
+            let numberOfNotifications = numberSpan.innerHTML;
+            console.log(numberOfNotifications)
+            if (!numberOfNotifications) {
+                numberSpan.innerHTML = 1;
+            } else {
+                numberSpan.innerHTML = parseInt(numberOfNotifications) + 1;                
+            }
+        });
+
+        let clearBtn = document.getElementById('clear-btn');
+
+        clearBtn.addEventListener('click', (e) => {
+            let dropdown = document.getElementById('notification-dropdown');
+            let notifications = dropdown.querySelectorAll('div')
+            notifications.forEach(notification => notification.remove())
+            numberSpan.innerHTML = ''
+        });
+
+
+        //START NEW SCRIPT FOR TESTING//
+        const userId = "{{ user_id }}"; // Use the user ID from the template context
+
+        // Fetch the count of unread notifications
+        function fetchNotificationCount() {
+            fetch(`notification_count_api/?user_id=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                const count = data.count;
+                const counter = document.getElementById('notification-counter');
+                counter.textContent = count; // Update the counter with the fetched count
+            });
+        }
+
+        /* Fetch the latest notification message
+        function fetchNotificationMessage() {
+            fetch(`/api/notification/latest/?user_id=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                const message = data.message;
+                const notificationMessage = document.getElementById('notification-message');
+                notificationMessage.textContent = message; // Update the notification message
+            });
+        }*/
+
+        // Fetch the count and message when the page loads
+        fetchNotificationCount();
+        fetchNotificationMessage();
+
+        // Set up WebSocket connection for real-time updates
+        const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+        const wsURL = `${wsScheme}://${window.location.host}/ws/notify/${userId}/`;
+        const socket = new WebSocket(wsURL);
+
+        socket.onmessage = function(event) {
+            // When a new notification is received, fetch the count and message again to update the counter and message
+            fetchNotificationCount();
+            fetchNotificationMessage();
+        };
+
+        // Event listener for the clear button
+        document.getElementById('clear-notifications').addEventListener('click', function() {
+            fetch(`/api/notification/clear/?user_id=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    // After clearing, update the count and message
+                    fetchNotificationCount();
+                    fetchNotificationMessage();
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            });
+        });
+
+        
+// Your Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBUef15crXKCD2AhIhSceQajbFBkEA2urg",
+        authDomain: "push-notification-a806b.firebaseapp.com",
+        projectId: "push-notification-a806b",
+        storageBucket: "push-notification-a806b.appspot.com",
+        messagingSenderId: "329285620602",
+        appId: "1:329285620602:web:60789ccd0416a3aea73cc3",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    // Request permission and get the FCM token
+    messaging.requestPermission()
+    .then(() => {
+        return messaging.getToken();
+    })
+    .then((token) => {
+        console.log('FCM Token:', token);
+        sendTokenToServer(token);
+    })
+    .catch((err) => {
+        console.log('Error getting FCM token:', err);
+    });
+
+    function sendTokenToServer(token) {
+        fetch('/webid/save_token/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),
+            },
+            body: JSON.stringify({ token: token })
+        }).then(response => {
+            if (response.ok) {
+                console.log('Token saved successfully.');
+            } else {
+                console.log('Failed to save token.');
+            }
+        }).catch(error => console.error('Error sending token:', error));
+    }
+
+    function getCSRFToken() {
+        const name = 'csrftoken';
+        const cookieValue = document.cookie.split('; ').find(row => row.startsWith(name)).split('=')[1];
+        return cookieValue;
+    }
+    </script>-->
+
+
+</body>
+
+</html>

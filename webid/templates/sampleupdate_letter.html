@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Letter</title>
+</head>
+<body>
+    <h1>Update Letter</h1>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="content">{{ sampleletter.content }}</textarea><br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

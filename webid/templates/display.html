@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+{% load static %}
+<ul>
+  {% for x in mymemberss %}
+    <li>{{ x.letter_desc}}</li>
+  {% endfor %}
+</ul>
+<ul>
+ {% for x in mymemberss %}
+  {% if x.first == "Geno" %}
+  <h1>Gwapo {{x.first}}</h1>
+  {% else %}
+  <h1>pagit{{x.first}}</h1>
+  {% endif %}
+ {% endfor %}
+</ul>
+
+<a href="home/">Home</a>
+
+</body>
+</html>

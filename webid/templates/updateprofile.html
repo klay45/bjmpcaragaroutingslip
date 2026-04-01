@@ -1,0 +1,109 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!--<h1>Update member</h1>
+
+<form action="updaterecord/{{ profile.id }}" method="post">
+{% csrf_token %}
+First Name:<br>
+<input name="first" value="{{ user.first_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Phone Number:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+Last Name:<br>
+<input name="last" value="{{ user.last_name }}">
+<br><br>
+<input type="submit" value="Submit">
+</form>-->
+<div class="container-fluid py-3">
+  <div class="container">
+
+            
+
+    <div class="col-md-12">
+      <div class="card shadow ">
+        <div class="card-body fullwidth__gradient animated container-fluid cartdata">
+
+          <div class="row flex-md-nowrap product_data">
+                  
+                <form action="updaterecordprofile/{{ user.id }}" method="post">
+	               {% csrf_token %}
+  
+                {% if user.profile.profile_img %}
+                    <div class="form-group">
+                      <img class="rounded-circle" src="{{ user.profile.profile_img.url }}"height="80px" width="80px"class="me-2">
+                    </div>
+                {% else %}
+	                   <i class="fa fa-user" aria-hidden="true" height="80px" width="80px"class="me-2"></i>
+                    
+                {% endif %}
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Profile Picture</label>
+                        <input type="file" name="profile_img" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">First Name</label>
+                        <input type="first" name="first_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name"value="{{ user.first_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Last Name</label>
+                        <input type="last" name="last_name"  class="form-control" value="{{ user.last_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Phone Number</label>
+                        <input type="phone" name="phone" class="form-control" value="{{user.profile.phone}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Email</label>
+                        <input type="phone" name="email" class="form-control" value="{{user.email}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="address" name="address" class="form-control" value="{{user.profile.address}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Region</label>
+                        <input type="region" name="region" class="form-control"value="{{user.profile.region}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">City</label>
+                        <input type="city" name="city" class="form-control"value="{{user.profile.city}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Zipcode</label>
+                        <input type="zipcode" name="zipcode" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Zipcode " value="{{user.profile.zipcode}}">
+                    </div>
+
+
+                    <br>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

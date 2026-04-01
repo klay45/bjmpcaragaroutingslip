@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid py-3">
+  <div class="container">
+
+            
+
+    <div class="col-md-12" mt-2>
+      <div class="card shadow " mt-2>
+        <div class="card-body fullwidth__gradient animated container-fluid cartdata" mt-2>
+
+          <div class="row flex-md-nowrap product_data"mt-2>
+
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<fieldset class="form-group">
+					<legend class="border-bottom mb-4">Profile</legend>
+					{% if user.employee.id_pic %}
+                    	<div class="form-group">
+                      		<img class="rounded-circle" src="{{ user.employee.id_pic.url }}"height="120px" width="120px"class="me-2">
+                   		</div>
+               		{% else %}
+	                   	<i class="fa fa-user" aria-hidden="true" height="80px" width="80px"class="me-2"></i>
+                    
+                	{% endif %}
+
+                	{{d_form}}
+					{{u_form}}
+					{{p_form}}
+					</fieldset>
+					<div class="form-group">
+						<!--<button class="btn btn-outlinr-info" type="submit">Update</button>-->
+						<br>
+						<button class="btn btn-primary" type="submit" >Updatddde</button>
+					</div>
+				</form>
+			
+			</div>
+		</div>
+	</div>
+	</div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

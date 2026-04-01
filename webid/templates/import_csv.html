@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="shadow-lg continer">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+ 
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Excel Data Upload</h2>
+            
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+ 
+              <div class="col-md-8 col-sm-12 col-xs-12 form-group mt-2">
+                 
+                </label>               
+              </div>
+               
+                    <input type="file" name="myfile" class="form-control mt-2">
+                             <button type="submit" class="btn btn-success mt-2" >Upload</button>                            
+                            <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  </form>
+  </div>
+
+{% endblock %}

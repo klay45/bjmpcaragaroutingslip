@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid py-3">
+
+
+
+    <div class="container">
+
+    
+
+    
+        <div class="row">
+
+            
+
+        <div class ="card-header">
+        
+            <h2 class="mb-0 d-flex justify-content-left">Letters</h2>
+            <form  action="{% url 'searchletterrd' %}" method=POST>
+                {% csrf_token %}
+            <div class="input-group d-flex justify-content-end">
+            
+                <div class="form-outline">
+                    <input type="text"  name="searched" class="form-control" />
+                     
+                
+                </div>
+                <button id="search-button" type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+                </button>
+            
+            </div>
+            </form>
+        </div>
+    
+        {% csrf_token %}
+            <div class="col-md-12 shadow checkoutform">
+
+                <div class="card-body">
+                <div class ="table-responsive">
+                    <table id="sales-info" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Letter Description</th>
+                                <th>Letter Sender</th>
+                                <th>Date Send</th>
+                                <th>Signaturee | Status</th>
+                                <th>Signaturee | Status</th>
+                                <th>Signaturee | Status</th>
+                                <th>Signaturee | Status</th>
+                                <th>File</th>
+                                <th>Trasaction No.</th>
+                                <th></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for item in orders %}
+                        
+                            
+                            
+
+                            <tr>
+                                <td>{{item.letter_desc}}</td>
+                                <td>{{item.sender}}</td>
+                                <td>{{item.date_send}}</td>
+                                <td>{{item.aprover_1}}<br>{{item.stat_1}}</td>
+                                <td>{{item.aprover_4}}<br>{{item.stat_4}}</td>
+                                <td>{{item.aprover_2}}<br>{{item.stat_2}}</td>
+                                <td>{{item.aprover_3}}<br>{{item.stat_3}}</td>
+                                
+                                <td><a href="displaypdf/{{item.id}}"target="_new"><i class="fa fa-file-word-o" style="font-size:36px"></i></a></td>
+                                <td>{{item.bjmptrans_no}}</td>
+                                
+                                <td>
+                                
+                                    <a href="letteractionrd/{{item.id}}"><i class="fa fa-address-card-o" style="font-size:36px"></i></a>
+                                    
+                                    
+                                </td>
+
+
+
+                                
+                            </tr>
+                                {% endfor %}
+                                
+
+
+                        </tbody>
+                    </table>
+    <script>
+        var t = document.getElementById('sales-info');
+        if(t) {
+            Array.from(t.rows).forEach((td, rowIdx) => {
+                Array.from(td.cells).forEach((cell, cellIdx) => {
+                    if (cell.innerText == 'sdf') {
+                        cell.style.backgroundColor = 'RGBA(95,160,97,0.6)';
+                    }else if (cell.textContent == "RDPending") {
+                        cell.style.backgroundColor = 'RGBA(249,38,19,1)';
+                    }else if (cell.textContent == 'RDApproved') {
+                        cell.style.backgroundColor = 'RGBA(3,201,169,1)';
+                    }
+                });
+            });
+        }
+        
+    </script>
+                </div>
+                
+                
+                </div>
+            </div> 
+
+        
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+{% endblock %}
+
+
+    

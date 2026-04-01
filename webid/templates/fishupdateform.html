@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="mydiv mt-2">
+  
+  <h3>Update Fish Profile</h3>
+  {% if submitted %}
+    Add successfully!!!
+
+  {% else %}
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ fish_form }}
+        
+        <input type="submit" value="Submit" class="btn btn-success">
+      
+      </form>
+  {% endif %}
+  
+  
+</div>
+
+
+{% endblock %}

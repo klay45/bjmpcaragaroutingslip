@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Update Fish Profile</h1>
+
+<form action="updatefishrecord/{{ fish.id }}" method="post">
+{% csrf_token %}
+Fish Type:<br>
+<input name="fish_type" value="{{ fish.fish_type }}">
+<br><br>
+Fish Name:<br>
+<input name="fish_name" value="{{ fish.fish_name }}">
+<br><br>
+Size:<br>
+<input name="fish_size" value="{{ fish.fish_size }}">
+<br><br>
+<input type="submit" value="Submit">
+</form>
+
+{% endblock %}

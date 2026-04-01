@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid py-3">
+	<div class="container">
+	
+
+	
+		<div class="row">
+		<div class ="card-header">
+			<h2 class="mb-0">My Orders</h2>
+		</div>
+	
+		{% csrf_token %}
+			<div class="col-md-12 shadow checkoutform">
+
+				<div class="card-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Order Date</th>
+								<th>Tracking Number</th>
+								<th>Total Price</th>
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in orders %}
+								
+
+							<tr>
+								<td>{{item.create_at}}</td>
+								<td>{{item.tracking_no}}</td>
+								<td>{{item.total_price}}</td>
+								<td>{{item.status}}</td>
+								<td>
+									 <a href="{% url 'myorderview' item.tracking_no %}"class="btn btn-primary"> View</a>
+								</td>
+								
+
+
+
+								
+							</tr>
+								{% endfor %}
+						</tbody>
+					</table>
+				
+				
+				</div>
+			</div> 
+
+		
+
+		</div>
+
+	</div>
+
+
+
+
+
+</div>
+{% endblock %}
+
+
+	

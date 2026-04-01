@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!--search bar start-->
+<div class="topnav">
+  <div class="search-container">
+    
+    <form action="{% url 'searchbarfishbuy' %}" method=POST>
+      {% csrf_token %}
+     <br/>
+      <input type="text" placeholder="Search fish type" name="searched">
+      <button type="submit">Submit</button>
+     <br/>
+     <br/>
+    </form>
+  </div>
+</div>
+
+
+<!--search bar end-->
+
+<!-- Team Start -->
+
+    <div class="container-fluid py-5">
+        
+        
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title bg-light rounded h-100 p-5">
+                        <h5 class="position-relative d-inline-block text-primary text-uppercase">Visit Us</h5>
+                        <h1 class="display-6 mb-4">Select Best Quality Fish</h1>
+                        <a href="appointment.html" class="btn btn-primary py-3 px-5">Contact Us</a>
+                    </div>
+                </div>
+
+
+             {% csrf_token %}
+             {% for fish in fish %}
+                     {% if fish.fish_img %}
+                     <!--<img class="connect-image-home" src="{{fish.fish_img.url}}" alt="connect">-->
+                     
+             
+              <!--<img class="img-fluid" src="{% static 'website/img/service-2.jpg' %}" alt=-->
+
+              <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+
+                    <div class="team-item "><!-- JAVASCRIPT ADD TO CART INCREMENT -->
+                        <div class="position-relative rounded-top" style="z-index: 1;">
+                            <!--<img class="img-fluid rounded-top w-100" src="{{ fish.fish_img.url }}" alt="">-->
+                            <a href="addtocart1/{{fish.id}}">
+                            <img class="img-fluid rounded-top w-100" src="{{ fish.fish_img.url }}" alt="">
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                            </a>
+                            
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                            <!--ADD TO CART QUANTITY START-->
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                            
+                                
+                            </div>  
+
+                            <!--ADD TO CART QUANTITY END-->
+                        </div>
+                        <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
+                            <h4 class="mb-2">{{fish.fish_name}}</h4>
+                            {% if fish.available_qty > 0 %}
+                            <h6 class="mb-2">Available stocks:{{fish.available_qty}}</h6>
+                            {% else %}  
+                            <h6 class="mb-2">Available stocks:0</h6>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+                    {% endif %}
+      
+            {% endfor %}
+
+                    
+        </div>
+    </div>
+    <!-- Team End -->
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notifications</title>
+</head>
+<body>
+    <h1>Notifications</h1>
+    <ul>
+        {% for notification in notifications %}
+            <li>
+                {{ samplenotification.message }} - {{ samplenotification.created_at }}
+                <a href="{% url 'mark_as_read' notification.id %}">Mark as read</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,571 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+<!--<style>
+    table, thead,td{
+        border:1px solid black;
+    }
+    td {
+  text-align: center;
+  vertical-align: middle;
+}
+</style>-->
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 6px;              /* adds space inside cells */
+    word-wrap: break-word;     /* forces long names to wrap */
+    white-space: normal;
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 200px;              /* wider column for sender */
+}
+</style>
+</head>
+<body>
+
+    <img src="static/website/img/header.png" >
+    <center><h1>ROUTING SLIP<h1></center>
+    <hr>
+    <h5>CONTROL NO: {{routingslip.bjmptrans_no}}<h5>
+    <h5>DATE: {{routingslip.date_send|date:"M d, Y"}}<h5>
+    <h5>SUBJECT: {{routingslip.letter_desc}}<h5>
+
+    
+                    <table>
+                        <thead>
+                            <tr>
+                                
+                                <th><br>FOR/TO</th>
+                                <th><br>FROM</th>
+                                <th><br>SENDER</th>
+                                <th><br>Signature</th>
+                                <th><br>IN</th>
+                                <th><br>OUT</th>
+                                <th><br>COMMENTS</th>
+                            
+                            </tr>
+                           
+                        </thead>
+                        <tbody>
+                          
+                         
+                         {%if routingslip.stat_3 == 'Pending' and routingslip.stat_4 == 'Pending' and routingslip.stat_2 == 'Pending' and routingslip.stat_1 == 'Pending'%}  
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+
+                                 <td> <img src="media/{{rank.signature}}"width="150" height="30" ></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                          
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                       
+                              <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            
+
+                        {%elif routingslip.stat_1 == 'Approved' and routingslip.stat_4 == 'Pending' and routingslip.stat_2 == 'Pending' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}" width="150" height="30"></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {%elif routingslip.stat_1 == 'Official Business' and routingslip.stat_4 == 'Pending' and routingslip.stat_2 == 'Pending' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                <td> <img src="media/{{rank.signature}}" width="150" height="30"></td>
+                                 <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                 <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {%elif routingslip.stat_1 == 'On Leave' and routingslip.stat_4 == 'Pending' and routingslip.stat_2 == 'Pending' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}" width="150" height="30"></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {%elif routingslip.stat_4 == 'Approved' and routingslip.stat_2 == 'Pending' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}"width="150" height="30" ></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {%elif routingslip.stat_4 == 'On Leave' and routingslip.stat_2 == 'Pending' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}"width="150" height="30" ></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {%elif routingslip.stat_4 == 'Official Business' and routingslip.stat_2 == 'Pending' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}" width="150" height="30"></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                              <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {%elif routingslip.stat_2 == 'Approve' and routingslip.stat_3 == 'Pending'%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}"width="150" height="30" ></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                            <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                                <td>{{routingslip.date_aprov_2}}</td>
+                                
+                            </tr>
+                            {%elif routingslip.stat_2 == 'On Leave' and routingslip.stat_3 == 'Pending'%}
+                                    <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}"width="150" height="30" ></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                            <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                                <td>{{routingslip.date_aprov_2}}</td>
+                                
+                            </tr>
+                            {%elif routingslip.stat_2 == 'Official Business' and routingslip.stat_3 == 'Pending'%}
+                                    <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}"width="150" height="30" ></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                            <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                                <td>{{routingslip.date_aprov_2}}</td>
+                                
+                            </tr>
+
+
+
+                             {%elif routingslip.stat_2 == 'Approved' and routingslip.stat_3 == 'Pending'%}
+                                    <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                                 <td> <img src="media/{{rank.signature}}" width="150" height="30"></td>
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                            <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                                <td>{{routingslip.date_aprov_2}}</td>
+                                
+                            </tr>
+                                
+                            
+
+
+                        {%else%}
+                            <tr>
+
+                                <td>RCDS</td>
+                                <td> {{routingslip.sender}}</td>
+                                <td> {{rank.rank}} {{user.last_name}}</td>
+                               
+                                <td> <img src="media/{{rank.signature}}"  width="150" height="30"></td>
+                                
+                                <td> {{routingslip.date_send}}</td>
+                                <td> {{routingslip.date_send}}</td>
+                                
+               
+                            </tr>
+                            <tr>
+                                <td>ARDO</td>
+                                <td>RCDS</td>
+                                <td>JSUPT JONATHAN Z BALTAR, JD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_send}}</td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                            </tr>
+                             <tr>
+                                <td>ARDA</td>
+                                <td>ARDO</td>
+                                <td>JSSUPT ROSENETTE G ROSERO</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_3}}</td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                            </tr>
+                          
+                            <tr>
+                                <td>RD</td>
+                                <td>ARDA</td>
+                                <td>JSSUPT ARVIN T ABASTILLAS, PhD</td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_4}}</td>
+                                <td>{{routingslip.date_aprov_2}}</td>
+                                
+                            </tr> 
+                             <!--<tr>
+                                <td>BELINDA A EBORA</td>
+                                <td></td>
+                                <td></td>
+                                <td><img src="static/website/img/E-SIGN/RD.png" ></td>
+                                <td>{{routingslip.date_aprov_2}}</td>
+                                <td>{{routingslip.date_aprov_1}}</td>
+                                
+                            </tr> -->
+                                              
+                             </tbody>
+                    </table>
+
+                        <br>
+                        <br>
+                <center><h5><b>APPROVED/DISAPPROVED/NOTED:</b></h5></center>
+                    <center><img src="static/website/img/E-SIGN/RD.png" width="300px" height="50px"></center>
+                    <center><h5>JSSUPT FERDINAND D PONTILLO, JD</h5></center>
+                        <center><h5>Regional Director of the Jail Bureau</h5></center>
+                            <!--<center><h5>Officer-in-Charge BJMPRO-CARAGA</h5></center>-->
+                                <center><h5>Date/Time:{{routingslip.date_aprov_1}}</h5></center>
+
+                            
+                            {%endif%}
+                            
+
+                               
+                                
+                              
+                              
+
+
+                      
+
+
+                        
+
+</body>
+</html>

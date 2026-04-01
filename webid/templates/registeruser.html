@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if form.errors %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Opps!</strong>There was an error with your form...
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+
+    </div>
+
+{% endif %}
+<div class="container-fluid py-3">
+    <div class="container">
+
+	<form action="{% url 'registeruser' %}" method=POST>
+	<div class ="shadow p-4 mb-5 bg-body rounded">
+	<h1>Register</h1>
+		{% csrf_token %}
+		{{form.as_p}}
+		{{profile_form.as_p}}
+	<br/><br/>
+	<input type="submit" value="Submit" class="btn btn-primary">
+	</div>
+	</form>
+    </div>
+</div>
+
+{% endblock %}

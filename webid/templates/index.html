@@ -1,0 +1,716 @@
+
+{% load static %}
+
+{% if messages %}
+    {% for message in messages %}
+        
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %} 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>bjmpcaraga.com</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'website/img/favv.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'website/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'website/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'website/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'website/lib/twentytwenty/twentytwenty.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'website/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'website/css/style.css' %}" rel="stylesheet">
+     
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+
+
+
+    
+
+
+
+
+
+</head>
+
+<body hx-ext="ws" ws-connect="/ws/notifications/">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light ps-5 pe-0 d-none d-lg-block">
+        <div class="row gx-0">
+            <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <small class="py-2"><i class="far fa-clock text-primary me-2"></i>Opening Hours: Mon - Saturday : 8.00 am - 6.00 pm, Sunday Closed </small>
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-lg-end">
+                <div class="position-relative d-inline-flex align-items-center bg-primary text-white top-shape px-5">
+                    <div class="me-3 pe-3 border-end py-2">
+                        <p class="m-0"><i class="fa fa-envelope-open me-2"></i>bjmpcaraga.com.ph</p>
+                    </div>
+                    <div class="py-2">
+                        <p class="m-0"><i class="fa fa-phone-alt me-2"></i>(085) 143 14344</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+
+
+
+
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
+        <a href="#" class="navbar-brand p-0">
+            <h2 class="m-0 text-primary">BJMP CARAGA REGION</h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="#" class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif%}">Home</a>
+    
+
+    <div class="nav-item nav-link">
+                                <!-- Right elements -->
+  <div class="flex items-center relative">
+
+  <div class="dropdown relative">
+    <a class="
+          text-gray-500
+          hover:text-gray-700
+          focus:text-gray-700
+          mr-8
+          dropdown-toggle
+          hidden-arrow
+          flex items-center
+        " href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell"
+        class="w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path fill="currentColor"
+          d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z">
+        </path>
+      </svg>
+      <!-- Number of Notifications box -->
+      <span id="notification-number" ></span>
+    </a>
+    <ul class="
+      dropdown-menu
+      min-w-max
+      absolute
+      hidden
+      bg-white
+      text-base
+      z-50
+      float-left
+      py-2
+      list-none
+      text-left
+      rounded-lg
+      shadow-lg
+      mt-1
+      hidden
+      m-0
+      bg-clip-padding
+      border-none
+      left-auto
+      right-0
+    " aria-labelledby="dropdownMenuButton1"
+      id="notification-dropdown">
+      
+        <!-- Notifications go here -->
+
+        <hr class="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+        <li>
+            <a href="#" id="clear-btn" class="
+            dropdown-item
+            text-sm
+            py-2
+            px-4
+            font-normal
+            block
+            w-full
+            whitespace-nowrap
+            bg-transparent
+            text-gray-700
+            hover:bg-gray-100">Clear All</a>
+    </li>
+
+    </ul>
+  </div>
+  <!-- Right elements -->
+  </div>
+</div>
+
+            <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Transaction</a>
+                    <div class="dropdown-menu m-0">
+                    {% if user.is_authenticated and user.is_superuser %}
+
+
+                        <a href="{% url 'addletter' %}" class="dropdown-item">Add Letter</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'displayletterRCDS' %}" class="dropdown-item">Approve Letter</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'adddivision1' %}" class="dropdown-item">Add Division</a>
+                        <a href="{% url 'status' %}" class="dropdown-item">Application Status</a>
+                        <a href="{% url 'importidforclaim' %}" class="dropdown-item">Import ID For Claim</a>
+                        <a href="{% url 'importdeptanddesignation' %}" class="dropdown-item">Import Department and Designation</a>
+                        <a href="{% url 'displayid' %}" class="dropdown-item">View ID Application</a>
+                        <a href="{% url 'activeapplication' %}" class="dropdown-item">View Active ID Application</a>
+                        <a href="{% url 'addid' %}" class="dropdown-item">Encode ID</a>
+                        <a href="{% url 'downloadidadmin' %}" class="dropdown-item">Download ID Application</a>
+                        <a href="{% url 'importidforclaimadmin' %}" class="dropdown-item">Import ID For Claim Admin</a>
+                        <a href="{% url 'displayidadmin' %}" class="dropdown-item">View ID Application Admin</a>
+                    {% elif user.is_staff %}
+                        <!--<a href="{% url 'addid' %}" class="dropdown-item">Encode ID</a>
+                        <a href="{% url 'displayidadmin' %}" class="dropdown-item">View ID Application Admin</a>-->
+                        <a href="{% url 'addletter' %}" class="dropdown-item">Add Letter</a>
+                        <a href="{% url 'adddivision1' %}" class="dropdown-item">Add Division</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'displayletterRCDS' %}" class="dropdown-item">Approve Letter</a>
+                        <a href="{% url 'displaymsgcenter' %}" class="dropdown-item">Message Center</a>
+
+                    {% else %}
+                        <!--<a href="{% url 'profile' %}" class="dropdown-item">Apply for ID</a>
+                        <a href="{% url 'status' %}" class="dropdown-item">Application Status</a>-->
+                        <a href="{% url 'addletter' %}" class="dropdown-item">Add Letter</a>
+                        <a href="{% url 'adddivision1' %}" class="dropdown-item">Add Division</a>
+                        <a href="{% url 'displayletter' %}" class="dropdown-item">Letters</a>
+                        <a href="{% url 'displayletterRCDS' %}" class="dropdown-item">Approve Letter</a>
+                        <a href="{% url 'displaymsgcenter' %}" class="dropdown-item">Message Center</a>
+                    {% endif %}
+                    </div>
+                </div>
+<!--REMOVE-->
+<!--
+            <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">EPCC Ticket</a>
+                    <div class="dropdown-menu m-0">
+                    {% if user.is_authenticated and user.is_superuser %}
+  
+                         <a href="https://cloudosticket.equi-parco.com/osticket/" class="dropdown-item">Create Ticket</a>
+                        <a href="https://cloudosticket.equi-parco.com/osticket/scp/login.ph" class="dropdown-item">MIS Staff</a>
+                       
+                        
+                    {% elif user.is_staff %}
+                        <a href="https://cloudosticket.equi-parco.com/osticket/" class="dropdown-item">Create Ticket</a>
+                        <a href="https://cloudosticket.equi-parco.com/osticket/scp/login.ph">MIS Staff</a>
+                        
+                       
+
+                    {% else %}
+                        <a target="_blank" href="https://cloudosticket.equi-parco.com/osticket/" class="dropdown-item" >Create Ticket</a>
+                        <a target="_blank" href="https://cloudosticket.equi-parco.com/osticket/scp/login.php" class="dropdown-item">MIS Staff</a>
+                       
+                    {% endif %}
+                    </div>
+            </div>-->
+
+
+
+            {% if user.is_authenticated %}
+              
+                <a href="{% url 'logoutuser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'logoutuser' %}active{% endif%}">Log-out</a>
+            {% else %}
+                <a href="{% url 'registeruser'  %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'registeruser' %}active{% endif%}">Sign-up</a>
+                <a href="{% url 'loginuser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'loginuser' %}active{% endif%}">Log-in</a>
+                <a href="{% url 'aboutus' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif%}">About Us</a>
+
+                                
+            {% endif %}
+            </div>
+
+            <div class="nav-item nav-link">
+            {% if user.is_authenticated and user.employee.id_pic.url %}
+                <a href="{% url 'addprofileimage' %}" >
+                    <img class="rounded-circle" src="{{user.employee.id_pic.url}}" height="80px" width="80px">
+                </a>
+            {% elif user.is_authenticated %}
+                <a href="{% url 'addprofileimage' %}">
+                    <i class="fa fa-user fa-4x" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+            </div>
+
+                
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Full Screen Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="input-group" style="max-width: 600px;">
+                        <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
+                        <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Full Screen Search End -->
+
+
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0">
+        <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="w-100" src="{% static 'website/img/carousel-1.jpg' %}" alt="Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Safekeeping and Development</h5>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">BJMP CARAGA REGION</h1>
+                            <!--<a href="#" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
+                            <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Contact Us</a>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="w-100" src="{% static 'website/img/bjmp anniversary.jpg' %}" alt="Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Safekeeping and Development</h5>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">BJMP CARAGA REGION</h1>
+                            <!--<a href="appointment.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
+                            <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Contact Us</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+
+    <!-- Banner Start -->
+    <div class="container-fluid banner mb-5">
+        <div class="container">
+            <div class="row gx-0">
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="bg-primary d-flex flex-column p-5" style="height: 300px;">
+                        <h3 class="text-white mb-3">Opening Hours</h3>
+                        <div class="d-flex justify-content-between text-white mb-3">
+                            <h6 class="text-white mb-0">Mon - Fri</h6>
+                            <p class="mb-0"> 8:00am - 5:00pm</p>
+                        </div>
+                        <div class="d-flex justify-content-between text-white mb-3">
+                            <h6 class="text-white mb-0">Saturday</h6>
+                            <p class="mb-0"> 8:00am - 5:00pm</p>
+                        </div>
+                        <div class="d-flex justify-content-between text-white mb-3">
+                            <h6 class="text-white mb-0">Sunday</h6>
+                            <p class="mb-0">Closed</p>
+                        </div>
+                        <a class="btn btn-light" href="">Visit Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="bg-dark d-flex flex-column p-5" style="height: 300px;">
+                        <h3 class="text-white mb-3">Activity</h3>
+                        <div class="date mb-3" id="date" data-target-input="nearest">
+                            <input type="text" class="form-control bg-light border-0 datetimepicker-input"
+                                placeholder="Appointment Date" data-target="#date" data-toggle="datetimepicker" style="height: 40px;">
+                        </div>
+                        <select class="form-select bg-light border-0 mb-3" style="height: 40px;">
+                            <option selected>Select A Project</option>
+                            <option value="1">Project 1</option>
+                            <option value="2">Project 2</option>
+                            <option value="3">Project 3</option>
+                        </select>
+                        <a class="btn btn-light" href="">Search Projects</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="bg-secondary d-flex flex-column p-5" style="height: 300px;">
+                        <h3 class="text-white mb-3">Make Appointment</h3>
+                        <p class="text-white">Test</p>
+                        <h2 class="text-white mb-0">1234567</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner Start -->
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="section-title mb-4">
+                        <h5 class="position-relative d-inline-block text-primary text-uppercase">About Us</h5>
+                        <h1 class="display-5 mb-0">Bureau of Jail Management and Penology</h1>
+                    </div>
+                    <h4 class="text-body fst-italic mb-4"></h4>
+                    <p class="mb-4">Enter Text Here!</p>
+                    <div class="row g-3">
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.3s">
+                            <h5 class="mb-3"><i class="fa fa-check-circle text-primary me-3"></i>Professional Services</h5>
+                            <h5 class="mb-3"><i class="fa fa-check-circle text-primary me-3"></i>Safekeeking and Development</h5>
+                        </div>
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.6s">
+                           
+                          
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-5" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="{% static 'website/img/BJMP RO.jpg' %}" style="object-fit: contain;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    
+
+    <!-- Team Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title bg-light rounded h-100 p-5">
+                        <h5 class="position-relative d-inline-block text-primary text-uppercase">BJMP CARAGA</h5>
+                        <h1 class="display-6 mb-4">List of Jails</h1>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                    <div class="team-item">
+                        <div class="position-relative rounded-top" style="z-index: 1;">
+                            <img class="img-fluid rounded-top w-100" src="{% static 'website/img/iponan flood control 6-samainpage.jpg' %}" alt="">
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
+                            <h4 class="mb-2">BISLIG CITY JAIL</h4>
+                            <p class="text-primary mb-0">BISLIG CITY</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
+                    <div class="team-item">
+                        <div class="position-relative rounded-top" style="z-index: 1;">
+                            <img class="img-fluid rounded-top w-100" src="{% static 'website/img/dam.jpg' %}" alt="">
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
+                            <h4 class="mb-2">BISLIG DISTRICT JAIL</h4>
+                            <p class="text-primary mb-0">BISLIG CITY</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="team-item">
+                        <div class="position-relative rounded-top" style="z-index: 1;">
+                            <img class="img-fluid rounded-top w-100" src="{% static 'website/img/13KO0233 (2).jpg' %}" alt="">
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
+                            <h4 class="mb-2">BUTUAN CITY JAIL MALE DORM</h4>
+                            <p class="text-primary mb-0">BUTUAN CITY </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                    <div class="team-item">
+                        <div class="position-relative rounded-top" style="z-index: 1;">
+                            <img class="img-fluid rounded-top w-100" src="{% static 'website/img/14KO0209.jpg' %}" alt="">
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
+                            <h4 class="mb-2">BUTUAN CITY JAIL FEMALE DORM</h4>
+                            <p class="text-primary mb-0">BUTUAN CITY</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
+                    <div class="team-item">
+                        <div class="position-relative rounded-top" style="z-index: 1;">
+                            <img class="img-fluid rounded-top w-100" src="{% static 'website/img/butuan airport development 21.jpg' %}" alt="">
+                            <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn btn-primary btn-square m-1" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
+                            
+                            <h4 class="mb-2">BAYUGAN CITY JAIL</h4>
+                            <p class="text-primary mb-0">BAYUGAN CIY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+
+
+    <!-- Newsletter Start -->
+    <div class="container-fluid position-relative pt-5 wow fadeInUp" data-wow-delay="0.1s" style="z-index: 1;">
+        <div class="container">
+            <div class="bg-primary p-5">
+                <form class="mx-auto" style="max-width: 600px;">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-white p-3" placeholder="Your Email">
+                        <button class="btn btn-dark px-4">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Newsletter End -->
+    
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light py-5 wow fadeInUp" data-wow-delay="0.3s" style="margin-top: -75px;">
+        <div class="container pt-5">
+            <div class="row g-5 pt-4">
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Quick Links</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                        <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Popular Links</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+                        <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                        <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Get In Touch</h3>
+                    <p class="mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>P-2 Upper Doongan Butuan City</p>
+                    <p class="mb-2"><i class="bi bi-envelope-open text-primary me-2"></i>bjmpcaraga.com</p>
+                    <p class="mb-0"><i class="bi bi-telephone text-primary me-2"></i>+012 345 67890</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-white mb-4">Follow Us</h3>
+                    <div class="d-flex">
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-light py-4" style="background: #051225;">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'website/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'website/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'website/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'website/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'website/lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'website/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'website/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src="{% static 'website/lib/twentytwenty/jquery.event.move.js' %}"></script>
+    <script src="{% static 'website/lib/twentytwenty/jquery.twentytwenty.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'website/js/main.js' %}"></script>
+
+    <!--fish icon-->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+ <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+    <script>
+        let numberSpan = document.getElementById('notification-number');
+
+        document.body.addEventListener('htmx:wsAfterMessage', (e) => {
+            let numberOfNotifications = numberSpan.innerHTML;
+            console.log(numberOfNotifications)
+            if (!numberOfNotifications) {
+                numberSpan.innerHTML = 1;
+            } else {
+                numberSpan.innerHTML = parseInt(numberOfNotifications) + 1;                
+            }
+        });
+
+        let clearBtn = document.getElementById('clear-btn');
+
+        clearBtn.addEventListener('click', (e) => {
+            let dropdown = document.getElementById('notification-dropdown');
+            let notifications = dropdown.querySelectorAll('div')
+            notifications.forEach(notification => notification.remove())
+            numberSpan.innerHTML = ''
+        });
+
+
+
+
+
+
+        // Your Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBUef15crXKCD2AhIhSceQajbFBkEA2urg",
+        authDomain: "push-notification-a806b.firebaseapp.com",
+        projectId: "push-notification-a806b",
+        storageBucket: "push-notification-a806b.appspot.com",
+        messagingSenderId: "329285620602",
+        appId: "1:329285620602:web:60789ccd0416a3aea73cc3",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    // Request permission and get the FCM token
+    messaging.requestPermission()
+    .then(() => {
+        return messaging.getToken();
+    })
+    .then((token) => {
+        console.log('FCM Token:', token);
+        sendTokenToServer(token);
+    })
+    .catch((err) => {
+        console.log('Error getting FCM token:', err);
+    });
+
+    function sendTokenToServer(token) {
+        fetch('/webid/save_token/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),
+            },
+            body: JSON.stringify({ token: token })
+        }).then(response => {
+            if (response.ok) {
+                console.log('Token saved successfully.');
+            } else {
+                console.log('Failed to save token.');
+            }
+        }).catch(error => console.error('Error sending token:', error));
+    }
+
+    function getCSRFToken() {
+        const name = 'csrftoken';
+        const cookieValue = document.cookie.split('; ').find(row => row.startsWith(name)).split('=')[1];
+        return cookieValue;
+    }
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="topnav">
+  
+  <!--<a class="active"href="addfish2/">Add Available</a>-->
+   <!--href="{% url 'index' %}">Home</a>-->
+  <!--<a href="addfish2/">Add Available</a>-->
+  <!--<a href="{% url 'user' %}">Back</a>-->
+  <div class="search-container">
+    
+    <form action="{% url 'searchbarfish' %}" method=POST>
+      {% csrf_token %}
+      
+      <input type="text" placeholder="Search fish type" name="searched">
+      <button type="submit">Submit</button>
+     
+    </form>
+  </div>
+</div>
+<table id="customers">
+<tr>
+    <th>Fish Type</th>
+    <th>Fish Name</th>
+    <th>Available Size</th>
+    <th>Price</th>
+</tr>
+
+
+{% if searched %}
+      {% for x in fish %}
+        <tr>
+            <td>{{ x.fish_type }}</td>
+            <td>{{ x.fish_name }}</td>
+            <td>{{ x.available_size }}</td>
+            <td>{{ x.fish_price }}</td>
+        </tr>
+      {% endfor %}
+</table>
+       
+
+{% else %}
+  <h1>You forgot to Search</h1>
+{% endif %}
+
+{% endblock %}

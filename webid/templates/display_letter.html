@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid py-3">
+	<div class="container">
+	
+
+	
+		<div class="row">
+		<div class ="card-header">
+			<h2 class="mb-0">Letter List</h2>
+		</div>
+	
+		{% csrf_token %}
+			<div class="col-md-12 shadow checkoutform">
+
+				<div class="card-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Letter Description</th>
+								<th>Letter Sender</th>
+								<th>Date Send</th>
+								<th>Signaturee</th>
+								<th>Status</th>
+								<th>Signaturee</th>
+								<th>Status</th>
+								<th>Signaturee</th>
+								<th>Status</th>
+								<th>Transaction No.</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in orders %}
+								
+
+							<tr>
+								<td>{{item.letter_desc}}</td>
+								<td>{{item.sender}}</td>
+								<td>{{item.date_send}}</td>
+								<td>{{item.aprover_1}}</td>
+								<td>{{item.stat_1}}</td>
+								<td>{{item.aprover_2}}</td>
+								<td>{{item.stat_2}}</td>
+								<td>{{item.aprover_2}}</td>
+								<td>{{item.stat_3}}</td>
+								<td>{{item.bjmptrans_no}}</td>
+								<td>
+									 
+									 <!--<a href="#}"class="btn btn-primary"> View</a>-->
+									 <a href="letteractionapproved/{{item.id}}"class="btn btn-primary mt-2">Update</a>
+
+								</td>
+								
+
+
+
+								
+							</tr>
+								{% endfor %}
+						</tbody>
+					</table>
+				
+				
+				</div>
+			</div> 
+
+		
+
+		</div>
+
+	</div>
+
+
+
+
+
+</div>
+{% endblock %}
+
+
+	
