@@ -9,7 +9,7 @@ import dj_database_url
 from decouple import Config, RepositoryEnv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+'''
 # -----------------------------
 # Bulletproof .env reader
 # -----------------------------
@@ -39,7 +39,18 @@ DATABASE_URL = env_vars.get('DATABASE_URL')
 # Safety check
 # -----------------------------
 if not SECRET_KEY:
-    raise ValueError("SECRET_KEY not found in .env file!")
+    raise ValueError("SECRET_KEY not found in .env file!")'''
+#new config
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable not set!")
+
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ['true', '1', 'yes']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
+#until this
 # -----------------------------
 # APPLICATIONS
 # -----------------------------
