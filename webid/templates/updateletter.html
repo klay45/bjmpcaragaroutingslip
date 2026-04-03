@@ -15,7 +15,7 @@
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">LETTER UPDATE</legend>
+                    <legend class="border-bottom mb-4">LETTER UPDATEdd</legend>
                     <!--{% if user.profile.profile_img %}
                     <div class="form-group">
                       <img class="rounded-circle" src="{{ user.profile.profile_img.url }}"height="120px" width="120px"class="me-2">
@@ -25,7 +25,8 @@
                     
                     {% endif %}-->
 
-                    {{u_form}}
+                    <!--{{u_form}}-->
+                    {{ form }}
                 
                     
                     </fieldset>

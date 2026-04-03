@@ -160,8 +160,163 @@ def test(request):
     return HttpResponse("DOne")
 
 
+@login_required(login_url='loginuser')
+def updateletter(request, id):
+    letter = get_object_or_404(Letter, id=id)
+
+    if request.method == "POST":
+        form = AddLetter(request.POST, request.FILES, instance=letter)
+
+        if form.is_valid():
+            reg = form.save(commit=False)
+            reg.action_request = request.POST.get('actionrequest', '')
+
+            uploaded_file = request.FILES.get('letter_pdf_file')
+
+            # Initialize Mega
+            mega = Mega()
+            m = mega.login(os.environ.get('MEGA_EMAIL'), os.environ.get('MEGA_PASSWORD'))
+
+            if uploaded_file:
+                # 🔴 DELETE OLD FILE
+                if reg.mega_file_id:
+                    try:
+                        files = m.get_files()
+                        print("Stored Mega ID:", reg.mega_file_id)
+
+                        if reg.mega_file_id in files:
+                            m.delete(reg.mega_file_id)
+                            print("Old file deleted successfully")
+                        else:
+                            print("Old file not found:", reg.mega_file_id)
+                    except Exception as e:
+                        print("Delete error:", e)
+
+                # Save uploaded file temporarily
+                with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                    for chunk in uploaded_file.chunks():
+                        tmp.write(chunk)
+                    tmp_path = tmp.name
+
+                # Find or create "Letter" folder
+                files = m.get_files()
+                folder_id = None
+                for key, value in files.items():
+                    if value['t'] == 1 and value['a']['n'] == 'Letter':
+                        folder_id = key
+                        break
+                if not folder_id:
+                    folder = m.create_folder('Letter')
+                    folder_id = list(folder.values())[0]
+
+                # Upload new file
+                uploaded = m.upload(tmp_path, folder_id, uploaded_file.name)
+
+                # ✅ Extract real Mega file ID
+                file_id = uploaded['f'][0]['h']
+
+                reg.mega_file_id = file_id
+                reg.letter_pdf = m.get_upload_link(uploaded)
+
+                os.remove(tmp_path)
+
+            # Update text fields
+            reg.letter_desc = form.cleaned_data['letter_desc'].upper()
+            reg.sender = form.cleaned_data['sender'].upper()
+
+            reg.save()
+            messages.success(request, "Letter updated successfully!")
+            return redirect('displayletter')
+
+    else:
+        form = AddLetter(instance=letter)
+
+    return render(request, 'updateletter.html', {'form': form})
 
 
+
+'''
+@login_required(login_url='loginuser')
+def updateletter(request, id):
+    letter = get_object_or_404(Letter, id=id)
+
+    if request.method == "POST":
+        form = AddLetter(request.POST, request.FILES, instance=letter)
+
+        if form.is_valid():
+            reg = form.save(commit=False)
+
+            # Handle checkbox
+            action_request = request.POST.get('actionrequest', '')
+            reg.action_request = action_request
+
+            uploaded_file = request.FILES.get('letter_pdf_file')
+
+            from mega import Mega
+            import tempfile
+            import os
+
+            mega = Mega()
+            m = mega.login(
+                os.environ.get('MEGA_EMAIL'),
+                os.environ.get('MEGA_PASSWORD')
+            )
+
+            # =========================
+            # ONLY DELETE OLD FILE IF NEW FILE IS UPLOADED
+            # =========================
+            if uploaded_file:
+                if reg.mega_file_id:
+                    try:
+                        m.delete(reg.mega_file_id)
+                    except Exception as e:
+                        print("Failed to delete old file:", e)
+
+                # Save new file
+                with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                    for chunk in uploaded_file.chunks():
+                        tmp.write(chunk)
+                    tmp_path = tmp.name
+
+                # Find or create folder
+                folders = m.get_files()
+                folder_id = None
+
+                for key, value in folders.items():
+                    if value['t'] == 1 and value['a']['n'] == 'Letter':
+                        folder_id = key
+                        break
+
+                if not folder_id:
+                    folder_id = m.create_folder('Letter')
+
+                # Upload new file
+                uploaded = m.upload(tmp_path, folder_id, uploaded_file.name)
+
+                # Update fields
+                reg.letter_pdf = m.get_upload_link(uploaded)
+                reg.mega_file_id = uploaded
+
+                os.remove(tmp_path)
+
+            # =========================
+            # TEXT UPDATES
+            # =========================
+            reg.letter_desc = form.cleaned_data['letter_desc'].upper()
+            reg.sender = form.cleaned_data['sender'].upper()
+
+            reg.save()
+
+            messages.success(request, "Letter updated successfully!")
+            return redirect('displayletter')
+
+    else:
+        form = AddLetter(instance=letter)
+
+    return render(request, 'updateletter.html', {'form': form})'''
+
+
+'''
 @login_required(login_url='loginuser')
 def updateletter(request,id):
     submitted = False
@@ -218,7 +373,7 @@ def updateletter(request,id):
         #'p_form':p_form,
     }
 
-    return render(request,'updateletter.html',context)
+    return render(request,'updateletter.html',context)'''
 
 
 
@@ -766,44 +921,40 @@ def addletter(request):
 
         if form.is_valid():
             reg = form.save(commit=False)
-
-            # Handle checkboxes (action_request)
             action_request = request.POST.get('actionrequest', '')
 
-            # Handle file upload to Mega
             uploaded_file = request.FILES.get('letter_pdf_file')
             if uploaded_file:
-                from mega import Mega
-                import tempfile
-                import os
-
                 mega = Mega()
                 m = mega.login(os.environ.get('MEGA_EMAIL'), os.environ.get('MEGA_PASSWORD'))
 
-                # Ensure file is saved locally first
+                # Save uploaded file temporarily
                 with tempfile.NamedTemporaryFile(delete=False) as tmp:
                     for chunk in uploaded_file.chunks():
                         tmp.write(chunk)
                     tmp_path = tmp.name
 
-                # Check if "Letter" folder exists, else create
-                folders = m.get_files()
+                # Find or create "Letter" folder
+                files = m.get_files()
                 folder_id = None
-                for key, value in folders.items():
-                    if value['t'] == 1 and value['a']['n'] == 'Letter':  # t==1 means folder
+                for key, value in files.items():
+                    if value['t'] == 1 and value['a']['n'] == 'Letter':
                         folder_id = key
                         break
                 if not folder_id:
-                    folder_id = m.create_folder('Letter')
+                    folder = m.create_folder('Letter')
+                    folder_id = list(folder.values())[0]
 
-                # Upload the file to the folder
+                # Upload file
                 uploaded = m.upload(tmp_path, folder_id, uploaded_file.name)
 
-                # Get public link
-                url = m.get_upload_link(uploaded)
-                reg.letter_pdf = url
+                # ✅ Extract real Mega file ID
+                file_id = uploaded['f'][0]['h']
+                print(file_id)
 
-                # Clean up temporary file
+                reg.mega_file_id = file_id
+                reg.letter_pdf = m.get_upload_link(uploaded)
+
                 os.remove(tmp_path)
 
             # Uppercase fields
@@ -817,7 +968,7 @@ def addletter(request):
             reg.aprover_4 = 'ARDO'
 
             reg.user = request.user
-            reg.bjmptrans_no = 'bjmpro13' + str(random.randint(1111111,9999999))
+            reg.bjmptrans_no = 'bjmpro13' + str(random.randint(1111111, 9999999))
             reg.action_request = action_request
 
             reg.save()
