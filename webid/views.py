@@ -79,6 +79,8 @@ from django.contrib.auth.models import User
 from .models import FCMToken
 from .utils import *  # Ensure Firebase is initialized
 from django.db.models import Q
+from mega import Mega #for mega
+import tempfile
 
 
 
@@ -240,7 +242,7 @@ def updateletter(request,id):
     #print(cleaned_filename)
     #print(filepath)
     return FileResponse(open(filepath,'rb'), content_type='application/pdf')"""
-
+'''
 def displaypdf(request, id):
     pdf = Letter.objects.filter(id=id)
 
@@ -256,6 +258,13 @@ def displaypdf(request, id):
         response = FileResponse(open(file_full_path, 'rb'), content_type='application/pdf')
         response['Content-Disposition'] = f'inline; filename="{cleaned_filename}"'
         return response
+
+    return HttpResponseNotFound('File not found')'''
+def displaypdf(request, id):
+    letter = get_object_or_404(Letter, id=id)
+
+    if letter.letter_pdf:
+        return redirect(letter.letter_pdf)
 
     return HttpResponseNotFound('File not found')
 
@@ -698,6 +707,7 @@ def loginuser(request):
             
     else:
         return render(request, 'loginuser.html',{})
+    
 
 
 @login_required(login_url='loginuser')
@@ -749,54 +759,138 @@ def addprofileimage(request):
 
     return render(request,'changeprofile.html',context)
 
-
-
-
-
 @login_required(login_url='loginuser')
 def addletter(request):
     if request.method == "POST":
-        form = AddLetter(request.POST,request.FILES)
-        user_id = AddLetter(request.POST,request.FILES,instance=request.user)
+        form = AddLetter(request.POST, request.FILES)
 
-        #for letter action
+        if form.is_valid():
+            reg = form.save(commit=False)
 
+            # Handle checkboxes (action_request)
+            action_request = request.POST.get('actionrequest', '')
 
-        form.user_id = request.user.id
-        #print(user_id)
-        trans_no='bjmpro13'+str(random.randint(1111111,9999999))
-        
-        if form.is_valid():#and request.POST.get('actionrequest'):
-            actionrequest=Letter()
-            actionrequest.action_request=request.POST.get('actionrequest')
-            #print(actionrequest.action_request)
-            #saverecord.save()
-            reg =form.save(commit=False)
-            
-            
-            letter_desc=form.cleaned_data['letter_desc']
-            sender=form.cleaned_data['sender']
-            letter_pdf=form.cleaned_data['letter_pdf']
-            a=letter_desc.upper()
-            b=sender.upper()
-            reg.letter_desc=a
-            reg.sender=b
-            reg.aprover_1='RCDS'
-            reg.aprover_2='ARDA'
-            reg.aprover_3='RD'
-            reg.user=request.user
-            reg.bjmptrans_no=trans_no
-            reg.letter_pdf=letter_pdf
-            reg.action_request=actionrequest.action_request
+            # Handle file upload to Mega
+            uploaded_file = request.FILES.get('letter_pdf_file')
+            if uploaded_file:
+                from mega import Mega
+                import tempfile
+                import os
+
+                mega = Mega()
+                m = mega.login(os.environ.get('MEGA_EMAIL'), os.environ.get('MEGA_PASSWORD'))
+
+                # Ensure file is saved locally first
+                with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                    for chunk in uploaded_file.chunks():
+                        tmp.write(chunk)
+                    tmp_path = tmp.name
+
+                # Check if "Letter" folder exists, else create
+                folders = m.get_files()
+                folder_id = None
+                for key, value in folders.items():
+                    if value['t'] == 1 and value['a']['n'] == 'Letter':  # t==1 means folder
+                        folder_id = key
+                        break
+                if not folder_id:
+                    folder_id = m.create_folder('Letter')
+
+                # Upload the file to the folder
+                uploaded = m.upload(tmp_path, folder_id, uploaded_file.name)
+
+                # Get public link
+                url = m.get_upload_link(uploaded)
+                reg.letter_pdf = url
+
+                # Clean up temporary file
+                os.remove(tmp_path)
+
+            # Uppercase fields
+            reg.letter_desc = form.cleaned_data['letter_desc'].upper()
+            reg.sender = form.cleaned_data['sender'].upper()
+
+            # Approvers
+            reg.aprover_1 = 'RCDS'
+            reg.aprover_2 = 'ARDA'
+            reg.aprover_3 = 'RD'
+            reg.aprover_4 = 'ARDO'
+
+            reg.user = request.user
+            reg.bjmptrans_no = 'bjmpro13' + str(random.randint(1111111,9999999))
+            reg.action_request = action_request
 
             reg.save()
-
-            messages.success(request,("Successfully Send Letter!"))
+            messages.success(request, "Successfully Sent Letter!")
             return redirect('displayletter')
     else:
         form = AddLetter()
-       
-    return render(request,'addletter.html',{'form':form},)
+
+    return render(request, 'addletter.html', {'form': form})
+
+
+
+'''
+@login_required(login_url='loginuser')
+def addletter(request):
+    if request.method == "POST":
+        form = AddLetter(request.POST, request.FILES)
+
+        # Generate transaction number
+        trans_no = 'bjmpro13' + str(random.randint(1111111, 9999999))
+
+        if form.is_valid():
+            reg = form.save(commit=False)
+
+            # Clean & format data
+            reg.letter_desc = form.cleaned_data['letter_desc'].upper()
+            reg.sender = form.cleaned_data['sender'].upper()
+            reg.aprover_1 = 'RCDS'
+            reg.aprover_2 = 'ARDA'
+            reg.aprover_3 = 'RD'
+            reg.user = request.user
+            reg.bjmptrans_no = trans_no
+
+            # Handle action request
+            reg.action_request = request.POST.get('actionrequest')
+
+            # -------- MEGA UPLOAD --------
+            pdf_file = request.FILES.get('letter_pdf')
+            if pdf_file:
+                temp_path = f"/tmp/{pdf_file.name}"
+
+                # Save temporarily
+                with open(temp_path, 'wb+') as f:
+                    for chunk in pdf_file.chunks():
+                        f.write(chunk)
+
+                # Upload to MEGA
+                mega = Mega()
+                m = mega.login(
+                    os.environ.get('MEGA_EMAIL'),
+                    os.environ.get('MEGA_PASSWORD')
+                )
+
+                uploaded_file = m.upload(temp_path)
+                mega_link = m.get_upload_link(uploaded_file)
+
+                # Save link instead of file
+                reg.letter_pdf = mega_link
+
+                # Delete temp file
+                os.remove(temp_path)
+
+            # Save to DB
+            reg.save()
+            form.save_m2m()
+
+            messages.success(request, "Successfully Sent Letter!")
+            return redirect('displayletter')
+
+    else:
+        form = AddLetter()
+
+    return render(request, 'addletter.html', {'form': form})'''
 
 
 def registeruser(request):

@@ -145,7 +145,8 @@ class Letter(models.Model):
 	aprover_4= models.CharField(max_length=250, null= True,default='ARDO',blank=True)
 	stat_4= models.CharField(max_length=150,choices=letter_status,default='Pending')#ARDO
 	bjmptrans_no=models.CharField(max_length=250,null=True)
-	letter_pdf = models.FileField(null=True,upload_to="pdf/letters")
+	#letter_pdf = models.FileField(null=True,upload_to="pdf/letters")
+	letter_pdf = models.URLField(max_length=500, blank=True, null=True)#for MEGA storage/render
 	action_request = models.CharField(max_length=250,null=True,blank=True)
 	date_aprov_1 = models.DateTimeField(auto_now_add=True,null=True)#RD
 	date_aprov_2 = models.DateTimeField(auto_now_add=True,null=True)#ARDA

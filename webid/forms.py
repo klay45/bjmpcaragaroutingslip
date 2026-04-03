@@ -577,12 +577,14 @@ class UpdateLetter(ModelForm):
 
 
 
-
+'''
 class AddLetter(ModelForm):
+	
+	letter_pdf_file = forms.FileField(required=False, label="Browse PDF/DOC File")
 	class Meta:
 
 		model = Letter
-		fields = ('letter_desc','sender','aprover_1','aprover_4','aprover_2','aprover_3','letter_pdf')
+		fields = ('letter_desc','sender','aprover_1','aprover_4','aprover_2','aprover_3')
 
 
 		div_name=[
@@ -643,9 +645,66 @@ class AddLetter(ModelForm):
 			#'aprover_3': forms.Select(choices=div_name,attrs={'class':'form-control '}),
 			
 
-		}
+		}'''
 
-	
+class AddLetter(ModelForm):
+    # File field for Mega upload
+    letter_pdf_file = forms.FileField(
+        required=False,
+        label="Browse PDF/DOC File",
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = Letter
+        # Include only the model fields; letter_pdf_file is handled separately
+        fields = ('letter_desc','sender','aprover_1','aprover_4','aprover_2','aprover_3')
+
+        div_name = [
+            ('CHOOSE LETTER FROM','CHOOSE LETTER FROM'),
+            ('ICTMD','ICTMD'),
+            ('PRMD','PRMD'),
+            ('HRDD','HRDD'),
+            ('RESJO','RESJO'),
+            ('RIPD','RIPD'),
+            ('PARALEGAL','PARALEGAL'),
+            ('LOGISTICS','LOGISTICS'),
+            ('WD','WD'),
+            ('HSD','HSD'),
+            ('RSAO','RSAO'),
+            ('CRS','CRS'),
+            ('GSO','GSO'),
+            ('OPERATION','OPERATION'),
+            ('RID','RID'),
+            ('CHAPLAINCY','CHAPLAINCY'),
+            ('GAD','GAD'),
+            ('PJAO','PJAO'),
+            ('LEGAL','LEGAL'),
+            ('LIASON','LIASON'),
+            ('FINANCE','FINANCE'),
+            ('RCDS','RCDS'),
+            ('PDD','PDD'),
+            ('RSBASS','RSBASS'),
+        ]
+
+        labels = {
+            'letter_desc': '',
+            'sender': '',
+            'aprover_1': 'First Signature',
+            'aprover_4': 'Second Signature',
+            'aprover_2': 'Third Signature',
+            'aprover_3': 'Fourth Signature',
+        }
+
+        widgets = {
+            'letter_desc': forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Letter Description'}),
+            'sender': forms.Select(choices=div_name, attrs={'class':'form-control'}),
+            'aprover_1': forms.TextInput(attrs={'class':'form-control','placeholder':'RCS','disabled':'disabled'}),
+            'aprover_4': forms.TextInput(attrs={'class':'form-control','placeholder':'ARDO','disabled':'disabled'}),
+            'aprover_2': forms.TextInput(attrs={'class':'form-control','placeholder':'ARDA','disabled':'disabled'}),
+            'aprover_3': forms.TextInput(attrs={'class':'form-control','placeholder':'RD','disabled':'disabled'}),
+        }	
+
 
 
 class LetterAction(ModelForm):
