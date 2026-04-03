@@ -423,7 +423,15 @@ def displaypdf(request, id):
 
     return HttpResponseNotFound('File not found')
 
+def displaypdfmsgcenter(request, id):
+    letter = get_object_or_404(Letter, id=id)
+    letter.dispatch = "Dispatched"
+    letter.save()
+    return redirect(letter.letter_pdf)
 
+
+
+'''
 def displaypdfmsgcenter(request,id):
     #filepath = os.path.join('media/pdf/letters', '14.pdf')
     pdf = Letter.objects.filter(id=id)
@@ -435,7 +443,7 @@ def displaypdfmsgcenter(request,id):
         id='media/'+aa
     print(aa)
     filepath = os.path.join(id)
-    return FileResponse(open(filepath,'rb'), content_type='application/pdf')
+    return FileResponse(open(filepath,'rb'), content_type='application/pdf')'''
 
 
     #return FileResponse(open(filepath, 'rb'), content_type='application/msword')
