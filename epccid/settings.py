@@ -45,8 +45,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable not set!")
 
-#DEBUG = os.environ.get('DEBUG', 'False').lower() in ['true', '1', 'yes']
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ['true', '1', 'yes']
+#DEBUG = True
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
