@@ -145,6 +145,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  # Can be empty, won't push 25GB folder
 
 # -----------------------------
+# FOR SUPABASE STORAGES
+# -----------------------------
+SUPABASE_URL = config("SUPABASE_URL")
+SUPABASE_KEY = config("SUPABASE_KEY")
+SUPABASE_BUCKET = config("SUPABASE_BUCKET")
+
+# -----------------------------
 # OTHER SETTINGS
 # -----------------------------
 IMPORT_EXPORT_USE_TRANSACTIONS = True

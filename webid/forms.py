@@ -715,7 +715,7 @@ class LetterAction(ModelForm):
 		
 
 		model = Letter
-		fields = ('letter_desc','sender','aprover_1','stat_1','comment_rcds','letter_pdf')
+		fields = ('letter_desc','sender','aprover_1','stat_1','comment_rcds')
 		letter_status = [
 		('Pending','Pending'),
 		('Approved','Approved'),
@@ -729,7 +729,7 @@ class LetterAction(ModelForm):
 			'aprover_1': 'First Signature',
 			'stat_1': 'Status',
 			'comment_rcds': 'Remarks',
-			'letter_pdf': 'Browse PDF/DOC File',
+			#'letter_pdf': 'Browse PDF/DOC File',
 
 		}
 		widgets = {
@@ -757,7 +757,7 @@ class LetterActionARDA(ModelForm):
 	class Meta:
 
 		model = Letter
-		fields = ('letter_desc','sender','aprover_2','stat_2','comment_arda','letter_pdf')
+		fields = ('letter_desc','sender','aprover_2','stat_2','comment_arda')
 		letter_status = [
 		('Pending','Pending'),
 		('Approved','Approved'),
@@ -772,7 +772,7 @@ class LetterActionARDA(ModelForm):
 			'aprover_2': 'Second Signature',
 			'stat_2': 'Status',
 			'comment_arda': 'Remarks',
-			'letter_pdf': 'Browse PDF/DOC File',
+			#'letter_pdf': 'Browse PDF/DOC File',
 		
 			#'remarks': 'Remarks',
 
@@ -798,7 +798,7 @@ class LetterActionRD(ModelForm):
 
 		model = Letter
 		#fields = ('letter_desc','sender','aprover_1','stat_1','aprover_2','stat_2','aprover_3','stat_3')
-		fields = ('letter_desc','sender','aprover_3','stat_3','comment_rd','letter_pdf')
+		fields = ('letter_desc','sender','aprover_3','stat_3','comment_rd')
 		letter_status = [
 		('Pending','Pending'),
 		('Approved','Approved'),
@@ -812,7 +812,7 @@ class LetterActionRD(ModelForm):
 			'aprover_3': 'Third Signature',
 			'stat_3': 'Status',
 			'comment_rd': 'Remarks',
-			'letter_pdf': 'Browse PDF/DOC File',
+			#'letter_pdf': 'Browse PDF/DOC File',
 
 
 		}
@@ -875,7 +875,7 @@ class LetterActionARDO(ModelForm):
 
 		model = Letter
 		#fields = ('letter_desc','sender','aprover_1','stat_1','aprover_2','stat_2','aprover_3','stat_3')
-		fields = ('letter_desc','sender','aprover_4','stat_4','comment_ardo','letter_pdf')
+		fields = ('letter_desc','sender','aprover_4','stat_4','comment_ardo')
 		letter_status = [
 		('Pending','Pending'),
 		('Approved','Approved'),
@@ -889,7 +889,7 @@ class LetterActionARDO(ModelForm):
 			'aprover_4': 'Fourth Signature',
 			'stat_4': 'Status',
 			'comment_ardo': 'Remarks',
-			'letter_pdf': 'Browse PDF/DOC File',
+			#'letter_pdf': 'Browse PDF/DOC File',
 
 		}
 		widgets = {

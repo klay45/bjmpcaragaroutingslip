@@ -139,7 +139,9 @@
                                 <td>{{item.aprover_3}}<br>{{item.stat_3}}</td>
                                 <td>{{item.dispatch}}</td>
                                
-                                <td><a href="displaypdf/{{item.id}}"target="_new"><i class="fa fa-file-pdf-o" style="font-size:36px;color:red"></i></a></td>
+                                <!--<td><a href="displaypdf/{{item.id}}"target="_new"><i class="fa fa-file-pdf-o" style="font-size:36px;color:red"></i></a></td>-->
+                                <td><a href="{% url 'displaypdf' item.id %}"target="_blank"><i class="fa fa-file-pdf-o" style="font-size:36px;color:red"></i></a></td>
+                                
                                 <!--
                                 <td>{% if item.comment_rcds%}<a class="open-preview_modal" data-toggle ="modal" data-target="#preview_modal" href="{% url 'modal_view' id=item.id %}"data-popup-url="{% url 'modal_view' id=item.id %}"
    class="btn-light float-end">RCDS <i class="fa fa-eye"></i></a>{%else%}{%endif%}<br>{% if item.comment_ardo%}<a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_ardo' id=item.id %}"data-popup-url="{% url 'modal_view_ardo' id=item.id %}">ARDO <i class="fa fa-eye"></i></a></h7>{%else%}{%endif%}<br>{% if item.comment_arda%}<a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_arda' id=item.id %}"data-popup-url="{% url 'modal_view_arda' id=item.id %}"class="btn btn-outline-primary float-end">ARDA <i class="fa fa-eye"></i></a>{%else%}{%endif%}<br>{% if item.comment_rd%}<a class="open-preview_modal" data-toggle="modal" data-target="#preview_modal" href="{% url 'modal_view_rd' id=item.id %}"data-popup-url="{% url 'modal_view_rd' id=item.id %}">RD View</a></h7>{%else%}{%endif%}<br></td>-->

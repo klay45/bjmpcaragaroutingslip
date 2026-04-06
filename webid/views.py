@@ -67,11 +67,6 @@ from itertools import chain
 from xhtml2pdf import pisa
 from django.template.loader import get_template
 
-
-
-
-
-
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from firebase_admin import messaging
@@ -79,9 +74,12 @@ from django.contrib.auth.models import User
 from .models import FCMToken
 from .utils import *  # Ensure Firebase is initialized
 from django.db.models import Q
-from mega import Mega #for mega
+#from mega import Mega #for mega
 import tempfile
-
+from django.http import Http404
+import requests
+import uuid
+from .supabase_client import supabase
 
 
 def routingslip_pdf(request,*args, **kwargs):
@@ -169,6 +167,76 @@ def updateletter(request, id):
 
         if form.is_valid():
             reg = form.save(commit=False)
+
+            uploaded_file = request.FILES.get('letter_pdf_file')
+
+            if uploaded_file:
+                # 🔥 DELETE OLD FILE (if exists)
+                if letter.letter_pdf:
+                    try:
+                        old_file_name = letter.letter_pdf.split("/")[-1]
+
+                        print("🗑 DELETING OLD FILE:", old_file_name)
+
+                        supabase.storage.from_("Letters").remove([old_file_name])
+
+                    except Exception as e:
+                        print("⚠️ DELETE ERROR:", e)
+
+                # 🔥 UPLOAD NEW FILE
+                file_name = f"{uuid.uuid4()}_{uploaded_file.name}"
+
+                print("📁 NEW FILE UPLOADED:", uploaded_file.name)
+
+                supabase.storage.from_("Letters").upload(
+                    file_name,
+                    uploaded_file.read(),
+                    {
+                        "content-type": uploaded_file.content_type
+                    }
+                )
+
+                # 🔗 GET PUBLIC URL
+                file_url = supabase.storage.from_("Letters").get_public_url(file_name)
+
+                print("🔗 NEW FILE URL:", file_url)
+
+                reg.letter_pdf = file_url
+
+            else:
+                print("⚠️ NO NEW FILE - KEEPING OLD FILE")
+                reg.letter_pdf = letter.letter_pdf
+
+            # Update other fields
+            reg.letter_desc = form.cleaned_data['letter_desc'].upper()
+            reg.sender = form.cleaned_data['sender'].upper()
+            reg.user = request.user.username
+
+            reg.save()
+
+            messages.success(request, "Letter Updated Successfully!")
+            return redirect('displayletter')
+
+    else:
+        form = AddLetter(instance=letter)
+
+    return render(request, 'updateletter.html', {
+        'form': form,
+        'letter': letter
+    })
+
+
+
+'''working update before mega unistall
+@login_required(login_url='loginuser')
+def updateletter(request, id):
+    letter = get_object_or_404(Letter, id=id)
+
+    if request.method == "POST":
+        form = AddLetter(request.POST, request.FILES, instance=letter)
+
+        if form.is_valid():
+            reg = form.save(commit=False)
             reg.action_request = request.POST.get('actionrequest', '')
 
             uploaded_file = request.FILES.get('letter_pdf_file')
@@ -231,7 +299,7 @@ def updateletter(request, id):
     else:
         form = AddLetter(instance=letter)
 
-    return render(request, 'updateletter.html', {'form': form})
+    return render(request, 'updateletter.html', {'form': form})'''
 
 
 
@@ -415,19 +483,29 @@ def displaypdf(request, id):
         return response
 
     return HttpResponseNotFound('File not found')'''
+   
 def displaypdf(request, id):
     letter = get_object_or_404(Letter, id=id)
 
-    if letter.letter_pdf:
-        return redirect(letter.letter_pdf)
+    if not letter.letter_pdf:
+        print("PDF URL:", letter.letter_pdf)
+        return HttpResponse("No PDF found for this record.")
 
-    return HttpResponseNotFound('File not found')
+    return redirect(letter.letter_pdf)
+
+
 
 def displaypdfmsgcenter(request, id):
     letter = get_object_or_404(Letter, id=id)
-    letter.dispatch = "Dispatched"
-    letter.save()
+
+    # mark as dispatched
+    if letter.dispatch != "Dispatched":
+        letter.dispatch = "Dispatched"
+        letter.save(update_fields=['dispatch'])
+
+    # redirect to PDF URL
     return redirect(letter.letter_pdf)
+
 
 
 
@@ -922,6 +1000,64 @@ def addprofileimage(request):
 
     return render(request,'changeprofile.html',context)
 
+
+@login_required(login_url='loginuser')
+def addletter(request):
+    if request.method == "POST":
+        form = AddLetter(request.POST, request.FILES)
+
+        if form.is_valid():
+            reg = form.save(commit=False)
+
+            uploaded_file = request.FILES.get('letter_pdf_file')
+
+            if uploaded_file:
+                file_name = f"{uuid.uuid4()}_{uploaded_file.name}"
+
+                print("📁 FILE UPLOADED:", uploaded_file.name)
+
+                # Upload to Supabase
+                response = supabase.storage.from_("Letters").upload(
+                    file_name,
+                    uploaded_file.read(),
+                    {
+                        "content-type": uploaded_file.content_type
+                    }
+                )
+
+                print("☁️ SUPABASE UPLOAD RESPONSE:", response)
+
+                # Get PUBLIC URL
+                file_url = supabase.storage.from_("Letters").get_public_url(file_name)
+
+                print("🔗 GENERATED FILE URL:", file_url)
+
+                # Save URL to DB
+                reg.letter_pdf = file_url
+
+            else:
+                print("⚠️ NO FILE UPLOADED")
+
+            reg.letter_desc = form.cleaned_data['letter_desc'].upper()
+            reg.sender = form.cleaned_data['sender'].upper()
+
+            reg.user = request.user
+
+            reg.save()
+
+            print("💾 DATABASE SAVED WITH URL:", reg.letter_pdf)
+
+            messages.success(request, "Successfully Sent Letter!")
+            return redirect('displayletter')
+
+    else:
+        form = AddLetter()
+
+    return render(request, 'addletter.html', {'form': form})
+
+
+
+'''working addletter before the mega uninstall
 @login_required(login_url='loginuser')
 def addletter(request):
     if request.method == "POST":
@@ -985,7 +1121,7 @@ def addletter(request):
     else:
         form = AddLetter()
 
-    return render(request, 'addletter.html', {'form': form})
+    return render(request, 'addletter.html', {'form': form})'''
 
 
 
